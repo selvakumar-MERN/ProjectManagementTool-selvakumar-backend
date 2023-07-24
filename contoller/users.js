@@ -100,7 +100,7 @@ const verifylogin= async(req,res)=>{
         }
         
     }
-    catch{
+    catch(error){
             res.status(400).send('invalid token')
     }
 }
