@@ -54,15 +54,19 @@ const usersSchema = new mongoose.Schema({
             type: String,
         },
         startDate: {
-            type: Date,
+            type: String,
             
         },
         finishDate: {
-            type: Date,
+            type: String,
         },
         status: {
             type: String,
-        }
+        },
+        date:{
+           type:Date,
+            default:new Date
+        }    
     }],
     newMessages:{
         type:Object,
