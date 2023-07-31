@@ -35,6 +35,15 @@ const usersSchema = new mongoose.Schema({
         required: false,
 
     },
+    role:{
+        type:String,
+    },
+    imageUrl:{
+       type:String,
+    },
+    publicId:{
+         type:String,
+    },
     team: [{
         firstName: {
             type: String,
@@ -44,6 +53,9 @@ const usersSchema = new mongoose.Schema({
         },
         useremail: {
             type: String
+        },
+        role:{
+            type:String,
         }
     }],
     Project: [{
@@ -64,9 +76,9 @@ const usersSchema = new mongoose.Schema({
             type: String,
         },
         date:{
-           type:Date,
-            default:new Date
-        }    
+            type:Date,
+            default:new Date,
+        }
     }],
     newMessages:{
         type:Object,
