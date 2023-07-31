@@ -6,7 +6,10 @@ const createChat= async(req,res)=>{
     })
 try{
       const result =await newchat.save();
-      res.status(200).send(result)
+      const chat= await chatmodel.find({
+        members:{$in:[req.body.senderId]}
+      })
+      res.status(200).send(chat)
 }
 catch(error){
      res.status(400).send(error)
