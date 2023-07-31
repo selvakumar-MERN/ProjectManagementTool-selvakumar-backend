@@ -26,6 +26,9 @@ const taskSchema=new mongoose.Schema({
     status:{
         type:String
     },
+    docLink:{
+         type:String,
+    },
     submissionlink:{
            type:String
     },
