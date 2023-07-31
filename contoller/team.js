@@ -15,9 +15,9 @@ catch(error){
 }
 
 const adduser=async(req,res)=>{
-    const{email,firstName,lastName,useremail}=req.body
+    const{email,firstName,lastName,useremail,role}=req.body
 try{    
-    await user.updateOne({email:email},{$push:{"team":{"firstName":firstName,"lastName":lastName,"useremail":useremail}}})
+    await user.updateOne({email:email},{$push:{"team":{"firstName":firstName,"lastName":lastName,"useremail":useremail,"role":role}}})
     res.status(200).send("User added sucessfully")
 }
 catch(error){
@@ -37,6 +37,22 @@ const getuser=async(req,res)=>{
         res.status(400).send(error)
     }    
 }
+
+//deleting the team user by admin
+const deleteuser=async(req,res)=>{
+    const{id}=req.params
+    const{email}=req.body
+    console.log(id,email)
+try{    
+       await user.updateOne({email:email},{$pull:{"team":{'_id':id}}})
+       res.status(200).send("user removed sucessfully")
+}
+catch(error)
+{
+    res.status(400).send(error)
+}
+}
+module.exports.deleteuser=deleteuser
 module.exports.getuser=getuser
 module.exports.adduser=adduser
 module.exports.searchUser=searchUser;
