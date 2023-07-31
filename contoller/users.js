@@ -3,12 +3,14 @@ const jwt= require('jsonwebtoken')
 const bcrypt = require('bcryptjs')
 const joi = require("@hapi/joi")
 
+
 //Verification with joi
 const usersSchema = joi.object({
     firstName: joi.string().min(3).required(),
     lastName: joi.string().min(3).required(),
     email: joi.string().min(3).required().email(),
     password: joi.string().min(8).required(),
+    role:joi.string().required(),
     confirmpassword: joi.string().min(8).required(),
     confirmpassword: joi.any().equal(joi.ref('password'))
         .required()
@@ -33,7 +35,9 @@ const register = async (req, res) => {
         lastName: req.body.lastName,
         email: req.body.email,
         password: hashedPass,
-        confirmpassword: hashedconf
+        confirmpassword: hashedconf,
+        imageUrl: process.env.DEFAULT_IMG,
+        role:req.body.role
     })
 
 
@@ -104,17 +108,33 @@ const verifylogin= async(req,res)=>{
             res.status(400).send('invalid token')
     }
 }
-
+  
 const getuser= async(req,res)=>{
     const{userId}=req.params
+     
 try{
-     const find = await user.findOne({_id:userId})
+     const find = await user.findById({_id:userId})
      res.status(200).send(find)
+     
 }   
 catch(error){
     res.status(400).send(error)
 } 
 }
+
+const updateuser= async(req,res)=>{
+    const {id}=req.params
+    const{firstName,lastName,email,role}=req.body
+try{
+      await user.updateOne({_id:id},{$set:{"firstName":firstName,"lastName":lastName,"email":email,"role":role}})
+      res.status(200).send("update success")
+}  
+catch(error){
+     res.status(400).send(error)
+}  
+}
+
+    module.exports.updateuser=updateuser
     module.exports.getuser=getuser;
     module.exports.verifylogin=verifylogin;
     module.exports.register=register;
