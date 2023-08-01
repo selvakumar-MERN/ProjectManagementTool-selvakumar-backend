@@ -4,7 +4,7 @@ const mongoose=require('mongoose');
 const cors= require('cors')
 const io = require('socket.io')(8000,{
      cors:{
-          origin:"http://localhost:3000"
+          origin:process.env.LOCAL_HOST
      }
 })
 let activeUsers=[]
